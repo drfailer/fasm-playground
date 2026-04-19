@@ -7,6 +7,7 @@ section '.text' executable
 
 include '../common/syntax.inc'
 include '../common/syscall.inc'
+include '../common/c.inc'
 
 proc main
     mov rdi, 800
@@ -19,12 +20,7 @@ proc main
         xor rdi, rdi ; color black ; TODO: make_color
         call ClearBackground
         ; draw message on screen
-        mov rdi, window_msg
-        mov rsi, 0
-        mov rdx, 0
-        mov r10, 12
-        mov r8, 0xFFFFFFFF
-        call DrawText
+        ccall5 DrawText, window_msg, 0, 0, 12, 0xFFFFFFFF
         call EndDrawing
         ; test close window
         call WindowShouldClose
