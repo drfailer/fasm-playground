@@ -3,8 +3,8 @@ entry _start
 
 segment readable executable
 
-include 'syntax.inc'
-include 'syscall.inc'
+include '../common/syntax.inc'
+include '../common/syscall.inc'
 
 ; TODO: write number
 

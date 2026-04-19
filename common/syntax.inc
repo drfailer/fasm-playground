@@ -40,3 +40,7 @@ macro endproc {
         pop rbp
         ret
 }
+
+macro return val {
+        mov rax, val
+}
