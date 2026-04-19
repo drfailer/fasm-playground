@@ -27,6 +27,7 @@ extrn BeginDrawing
 extrn EndDrawing
 extrn ClearBackground ; void(Color color)
 extrn DrawRectangle ; void(int posx, int posy, int width, int height, Color color)
+extrn LoadFont ; Font(const char *fileName)
 extrn LoadFontEx ; Font(const char *fileName, int fontSize, int *codepoints, int codepointCount)
 extrn UnloadFont ; void(Font font)
 extrn DrawText ; void(char const *text, int posx, int posy, int font_size, Color color)

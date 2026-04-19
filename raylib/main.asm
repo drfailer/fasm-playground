@@ -9,12 +9,42 @@ include '../common/syntax.inc'
 include '../common/syscall.inc'
 include '../common/c.inc'
 
+macro call_DrawTextEx font, msg, px_size, spacing, color {
+    ; font
+    sub rsp, 48
+    mov rax, [font-8]
+    mov qword [font-48-8], rax
+    mov rax, [font-16]
+    mov qword [font-48-16], rax
+    mov rax, [font-24]
+    mov qword [font-48-24], rax
+    mov rax, [font-32]
+    mov qword [font-48-32], rax
+    mov rax, [font-40]
+    mov qword [font-48-40], rax
+    mov rax, [font-48]
+    mov qword [font-48-48], rax
+    mov rdi, window_msg ; text
+    ; position
+    pxor xmm0, xmm0 ; TODO: make_vector2
+    ; font size
+    mov eax, px_size
+    cvtsi2ss xmm1, eax
+    ; font spacing
+    mov eax, spacing
+    cvtsi2ss xmm2, eax
+    mov rsi, color
+    xor rax, rax
+    call DrawTextEx
+    add rsp, 48
+}
+
 proc main
     sub rsp, 48 ; Font
 
     ccall3 InitWindow, 800, 600, window_name
 
-    ; load the font
+    ; load the font ex
     lea rax, [rbp-48]
     mov rdi, rax
     mov rsi, font_path
@@ -28,34 +58,7 @@ proc main
         call BeginDrawing
         ccall1 ClearBackground, 0x88888888
         ; ccall5 DrawText, window_msg, 0, 0, 12, 0xFFFFFFFF
-        ; DrawTextEx begin
-            ; the font is copied and passed on the stack
-            sub rsp, 48
-            mov rax, [rbp-8]
-            mov qword [rbp-48-8], rax
-            mov rax, [rbp-16]
-            mov qword [rbp-48-16], rax
-            mov rax, [rbp-24]
-            mov qword [rbp-48-24], rax
-            mov rax, [rbp-32]
-            mov qword [rbp-48-32], rax
-            mov rax, [rbp-40]
-            mov qword [rbp-48-40], rax
-            mov rax, [rbp-48]
-            mov qword [rbp-48-48], rax
-            mov rdi, window_msg ; text
-            pxor xmm0, xmm0 ; position
-            ; font size
-            mov eax, font_size
-            cvtsi2ss xmm1, eax
-            ; font spacing
-            mov eax, 1
-            cvtsi2ss xmm2, eax
-            mov rsi, 0xFFFFFFFF ; color
-            xor rax, rax
-            call DrawTextEx
-            add rsp, 48
-        ; DrawTextEx end
+        call_DrawTextEx rbp, window_msg, 20, 1, 0xFFFFFFFF
         ccall5 DrawRectangle, 400, 300, 100, 100, 0xFF0000FF
         call EndDrawing
         ; test close window
