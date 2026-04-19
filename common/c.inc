@@ -35,7 +35,7 @@ macro ccall5 function_name, arg0, arg1, arg2, arg3, arg4 {
     mov rdi, arg0
     mov rsi, arg1
     mov rdx, arg2
-    mov r10, arg3
+    mov rcx, arg3
     mov r8, arg4
     call function_name
 }
@@ -45,7 +45,7 @@ macro ccall6 function_name, arg0, arg1, arg2, arg3, arg4, arg5 {
     mov rdi, arg0
     mov rsi, arg1
     mov rdx, arg2
-    mov r10, arg3
+    mov rcx, arg3
     mov r8, arg4
     mov r9, arg5
     call function_name

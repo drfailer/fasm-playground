@@ -21,6 +21,7 @@ proc main
         call ClearBackground
         ; draw message on screen
         ccall5 DrawText, window_msg, 0, 0, 12, 0xFFFFFFFF
+        ccall5 DrawRectangle, 400, 300, 100, 100, 0xFF0000FF
         call EndDrawing
         ; test close window
         call WindowShouldClose
